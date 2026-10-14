@@ -797,3 +797,16 @@ a partir do repo do Anchor, Sessão 101 de lá; repo clonado nesta máquina em `
 
 **Estado ao final**: 1.17 implementada, não publicada (push aguardando o dono do projeto).
 
+**Continuação, mesma sessão** — 1.17 publicada (`a418f24`). Depois, a Fase 17 do Anchor (consumir
+`/v1/rates`) achou `/v1/rates/selic/meta` em **502 seguido**. Investigado em camadas: BCB direto
+via `curl` por janela (oscila — mesma janela em 0,4s, ~30s, 502, ou HTML com status 200),
+`fetch_daily_series` direto no container (às vezes passava), `get_or_refresh_selic` com banco →
+`ReadTimeout` (15s). Uma janela lenta derrubava a série inteira (~4 janelas por chamada).
+**Corrigido em `bcb_sgs.py`**: `_fetch_daily_window` com timeout de 45s e até 3 tentativas por
+janela (backoff de 2s), tratando erro de rede/HTTP e corpo não-JSON como recuperável. 1 teste
+novo (janela instável: timeout → HTML → sucesso) e o teste de erro de rede passou a conferir as 3
+tentativas. `pytest` de `bcb_sgs`/`rates`: 16/16. Verificado ao vivo pelo Anchor (Selic 13,75%,
+série desde 1999). **Fragilidade pré-existente registrada, não corrigida**: `fetch_monthly_series`
+(CDI/IPCA) segue com 15s e sem nova tentativa — um 502 passageiro do BCB derrubou o CDI uma vez
+nesta sessão.
+

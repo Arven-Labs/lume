@@ -13,12 +13,23 @@ percentage.
 """
 from __future__ import annotations
 
+import time
 from datetime import date, timedelta
 
 import requests
 
 BCB_SGS_URL_TEMPLATE = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.{code}/dados"
 REQUEST_TIMEOUT_SECONDS = 15
+
+# Série diária pagina em ~4 janelas e uma única falha derrubava a série
+# inteira. Achado ao vivo (Sessão 19, 2026-10-14): o BCB oscila — a mesma
+# janela ora responde em 0,4s, ora leva ~30s, ora devolve 502 ou uma página
+# HTML com status 200 —, e o timeout de 15s cortava as lentas, deixando o
+# `/v1/rates/selic/meta` em 502 seguido. Cada janela agora tem timeout maior
+# e até 3 tentativas.
+DAILY_REQUEST_TIMEOUT_SECONDS = 45
+DAILY_WINDOW_ATTEMPTS = 3
+DAILY_RETRY_BACKOFF_SECONDS = 2
 
 # BCB SGS recusa (HTTP 406) uma busca sem `dataInicial` numa série diária —
 # "O sistema aceita uma janela de consulta de, no máximo, 10 anos em séries
@@ -95,18 +106,7 @@ def fetch_daily_series(series_code: int) -> list[dict]:
                 date(window_start.year + DAILY_SERIES_WINDOW_YEARS, 1, 1) - timedelta(days=1),
                 today,
             )
-            response = requests.get(
-                BCB_SGS_URL_TEMPLATE.format(code=series_code),
-                params={
-                    "formato": "json",
-                    "dataInicial": window_start.strftime("%d/%m/%Y"),
-                    "dataFinal": window_end.strftime("%d/%m/%Y"),
-                },
-                headers={"User-Agent": "lume-api/1.0"},
-                timeout=REQUEST_TIMEOUT_SECONDS,
-            )
-            response.raise_for_status()
-            raw_items = response.json()
+            raw_items = _fetch_daily_window(series_code, window_start, window_end)
 
             for item in raw_items:
                 day, month, year = item["data"].split("/")
@@ -122,3 +122,28 @@ def fetch_daily_series(series_code: int) -> list[dict]:
         raise BcbSgsError(f"BCB SGS request failed for series {series_code}: {exc}") from exc
 
     return results
+
+
+def _fetch_daily_window(series_code: int, window_start: date, window_end: date) -> list:
+    """One window of a daily series, retried on network error, HTTP error or a non-JSON body
+    (the BCB sometimes answers 200 with an HTML error page). Raises the last error."""
+    last_exc: Exception | None = None
+    for attempt in range(DAILY_WINDOW_ATTEMPTS):
+        if attempt > 0:
+            time.sleep(DAILY_RETRY_BACKOFF_SECONDS)
+        try:
+            response = requests.get(
+                BCB_SGS_URL_TEMPLATE.format(code=series_code),
+                params={
+                    "formato": "json",
+                    "dataInicial": window_start.strftime("%d/%m/%Y"),
+                    "dataFinal": window_end.strftime("%d/%m/%Y"),
+                },
+                headers={"User-Agent": "lume-api/1.0"},
+                timeout=DAILY_REQUEST_TIMEOUT_SECONDS,
+            )
+            response.raise_for_status()
+            return response.json()
+        except (requests.RequestException, ValueError) as exc:
+            last_exc = exc
+    raise last_exc

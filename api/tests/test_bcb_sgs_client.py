@@ -83,6 +83,38 @@ def test_fetch_daily_series_wraps_network_error():
     with patch(
         "app.sources.bcb_sgs.requests.get",
         side_effect=requests.ConnectionError("boom"),
-    ):
+    ) as mock_get, patch("app.sources.bcb_sgs.time.sleep"):
         with pytest.raises(BcbSgsError):
             fetch_daily_series(432)
+
+    # Gave up on the first window after all attempts — never moved on.
+    assert mock_get.call_count == 3
+
+
+def test_fetch_daily_series_retries_a_flaky_window():
+    # BCB answering a window with a timeout, then an HTML page (json() raises
+    # ValueError), then real data — the window still succeeds.
+    calls = {"n": 0}
+
+    class HtmlResponse:
+        def raise_for_status(self):
+            pass
+
+        def json(self):
+            raise ValueError("Expecting value: line 1 column 1")
+
+    def _side_effect(*args, **kwargs):
+        calls["n"] += 1
+        if calls["n"] == 1:
+            raise requests.ReadTimeout("slow")
+        if calls["n"] == 2:
+            return HtmlResponse()
+        return _fake_response([])
+
+    with patch("app.sources.bcb_sgs.requests.get", side_effect=_side_effect), patch(
+        "app.sources.bcb_sgs.time.sleep"
+    ) as mock_sleep:
+        result = fetch_daily_series(432)
+
+    assert result == []
+    assert mock_sleep.call_count == 2
