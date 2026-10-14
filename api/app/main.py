@@ -11,6 +11,7 @@ from app.routers import (
     options,
     rates,
     stocks,
+    tax_rules,
     us_stocks,
 )
 
@@ -27,6 +28,7 @@ app.include_router(us_stocks.router)
 app.include_router(rates.router)
 app.include_router(currencies.router)
 app.include_router(options.router)
+app.include_router(tax_rules.router)
 
 
 @app.get("/healthz")

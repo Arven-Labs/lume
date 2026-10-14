@@ -281,6 +281,22 @@ o Anchor faz de forma isolada (`data-collector/`), expondo tudo via uma API HTTP
   mesma vol). Fecha o último item de brainstorm que tinha pesquisa de fonte concluída — restam
   só as 3 ideias mais antigas do roadmap nunca sequenciadas (Open Finance, Unified Payment API,
   SDK do catálogo de fontes, ver `ROADMAP.md`), sem pesquisa de fonte feita ainda.
+- [x] 1.17 — Regras de IR sobre investimentos, `GET /v1/tax-rules/br` (Sessão 19, 2026-10-14):
+  pedida pela Fase 24 do Anchor (apuração de IR em renda variável). Não há fonte oficial legível
+  por máquina pra alíquotas/limites, então o dado é **curado à mão e versionado no repo**
+  (`app/services/tax_rules_service.py`, constante Python em vez de `.json` pra entrar no binário
+  do sidecar sem config extra de empacotamento) — sem tabela, sem Alembic, sem cache. Cada regra
+  tem `key`, `value`, `effective_from`, `description`, `source`, `verified_at`; mudança de lei =
+  **entrada nova** com a data nova, nunca editar a antiga (o consumidor apura meses passados com
+  a regra da época). 11 regras na primeira versão: alíquotas comum 15%/day trade 20%/FII 20%,
+  isenção de R$ 20 mil em vendas de ações (units não — SC Cosit 145/2021), IRRF 0,005%/1%,
+  mínimo de DARF R$ 10, código 6015, JCP 15% → 17,5% desde 2026 (LC 224/2025), isenção de cripto
+  R$ 35 mil. Fontes oficiais da Receita onde existem; as que vieram de fonte secundária estão
+  marcadas "verify on planalto.gov.br" no próprio `source`. Auth `require_api_key` como o resto.
+  4 testes novos (`test_tax_rules_router.py`); **verificado ao vivo** contra o Anchor por um
+  teste `#[ignore]` do lado de lá (`commands::tax::tests`), que confere as 11 regras contra o
+  seed da migration do Anchor. Atualizar este módulo é o caminho pra regra nova chegar a todo
+  consumidor; o Anchor ainda deixa o usuário editar o valor localmente se a atualização atrasar.
 
 ### Fase 2 — Engine Fiscal (SEFAZ)
 

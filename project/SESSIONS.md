@@ -777,3 +777,23 @@ na raiz sem commitar) — ideias pra debate, não decisões fechadas.
 **Estado ao final**: nenhum código alterado. Próximo passo: debater os pontos em aberto da seção
 nova do `ROADMAP.md` antes de qualquer `/plan`.
 
+### 2026-10-14 — Sessão 19
+
+**Objetivo**: servir as regras de IR sobre investimentos pra Fase 24 do Anchor (sessão conduzida
+a partir do repo do Anchor, Sessão 101 de lá; repo clonado nesta máquina em `../lume`).
+
+**Feito**:
+- Item 1.17: `GET /v1/tax-rules/br` (router + schema + service com as regras curadas). Detalhe
+  em `PHASE.md`.
+- `pytest` dos testes novos + `test_rates_router.py` (sem regressão): **8/8**. Suite completa
+  não rodada.
+- **Achado de ambiente**: rodar `pytest` contra o Postgres do `docker compose` (mesmo banco do
+  `api`) cria as tabelas via `Base.metadata.create_all` sem `alembic_version`, e o próximo `up`
+  do `api` quebra no `alembic upgrade head` (`DuplicateTable`). Volume era desta sessão (criado
+  pelo próprio `pytest`), recriado do zero. Vale um banco de teste separado no futuro.
+- Verificado ao vivo: `api` de pé, `curl` em `/v1/tax-rules/br` ok, e o teste `#[ignore]` do
+  Anchor (`commands::tax::tests::live_lume_rules_match_migration_seed`) passou — as 11 regras
+  batem com o seed do Anchor.
+
+**Estado ao final**: 1.17 implementada, não publicada (push aguardando o dono do projeto).
+
