@@ -1,6 +1,6 @@
 # Lume — Estado do Projeto
 
-> Última atualização: 2026-10-14 (Sessão 20 — `lume-ideias.md` incorporado ao `ROADMAP.md` como brainstorm: régua de escopo, ideias de utilidades financeiras e não financeiras, namespaces por domínio)
+> Última atualização: 2026-10-14 (Sessão 21 — `SPEC-lume-desmontagem.md` registrada: decisão de desfazer o Lume e tornar o Anchor autossuficiente; plano de migração a discutir)
 
 ---
 

@@ -346,3 +346,38 @@ estáveis, e o Warden já teria uso imediato.
   no mesmo modelo já estabelecido (endpoint novo por capacidade, cache-through via Postgres,
   consumido pelo cliente HTTP do Anchor). Dono do projeto não tem certeza de quais fontes usar
   pros itens restantes — pesquisa de fontes é o primeiro passo antes de qualquer `/plan`.
+
+
+---
+
+### Desmontagem do Lume (Sessão 21 — decisão tomada, plano de migração a debater)
+
+> Origem: `SPEC-lume-desmontagem.md` (raiz do repo), escrita a partir de uma conversa de alto nível
+> — a spec manda **não presumir nada** e confirmar cada decisão de arquitetura com o dono do projeto.
+> Itens **[DIREÇÃO]** são ideias a validar.
+
+**Decisão**: o Lume será desfeito. O Anchor deve ficar totalmente autossuficiente (spec par:
+`SPEC-anchor-autossuficiencia.md`, no repo do Anchor) e as capacidades de dados financeiros migram
+pra dentro dele. Motivo: dois repositórios num único projeto geram desorganização; nenhum projeto
+tem usuários ainda, mas a arquitetura não deve exigir retrabalho pra escalar.
+
+**Impacto sobre o que está registrado acima**: o reposicionamento (Sessão 18), a régua de escopo e
+o catálogo de utilidades (Sessão 20), a ingestão agendada e as Fases 2-4 do `PHASE.md` partiam do
+Lume como serviço próprio — ficam em suspenso até a migração ser discutida.
+
+**O que fazer (da spec)**:
+- Inventariar o que o Lume faz hoje: capacidades, fontes, cache/armazenamento, contratos expostos, config.
+- Verificar (sem presumir) o que o Anchor consome e como: sidecar, fallback pra instância compartilhada.
+- Propor, com opções e tradeoffs, o que migra, o que é reescrito e o que é descartado.
+- Documentar a migração pro agente do Anchor executar a outra metade.
+
+**Estado do repo**: permanece no GitHub; o dono valida com o tempo e só então arquiva/apaga.
+Nada é deletado ou arquivado sem confirmação explícita. Aviso de "em desmontagem" no README: só
+com confirmação.
+
+**Questões abertas**:
+- Preservar o padrão `DataProvider` (grátis, BYO-key, premium)? De que forma?
+- A renomeação EasyBusiness → Lume perde o sentido? (provável, confirmar)
+- Algo além do Anchor depende do Lume (o Warden compartilhava a instância)?
+
+**Fora de escopo**: mudanças no Warden/TruthID; criar novos repositórios.

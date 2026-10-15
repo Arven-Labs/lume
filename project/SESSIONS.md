@@ -828,3 +828,18 @@ ideias pra debate, não decisões fechadas.
 
 **Estado ao final**: nenhum código alterado. Próximo passo: debater os pontos em aberto antes de
 qualquer `/plan`.
+
+### 2026-10-14 — Sessão 21
+
+**Objetivo**: registrar na documentação a `SPEC-lume-desmontagem.md` (nova, na raiz) antes de
+discuti-la com o dono do projeto.
+
+**Feito**:
+- Spec lida: decisão de desfazer o Lume e migrar as capacidades pro Anchor, que fica autossuficiente.
+- `ROADMAP.md`: seção "Desmontagem do Lume" (decisão, impacto sobre reposicionamento/régua/Fases 2-4,
+  estado do repo, questões abertas). `ARCHITECTURE.md`: linha nova na tabela. Data do `INDEX.md`.
+- `SPEC-lume-desmontagem.md` mantida na raiz (diferente do `lume-ideias.md`) por ser o guia da
+  discussão que se segue.
+
+**Estado ao final**: nenhum código alterado, nada migrado. Próximo passo: explorar o repo e o
+consumo do Anchor, apresentar o inventário e discutir as opções de migração.
