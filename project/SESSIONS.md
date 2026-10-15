@@ -843,3 +843,22 @@ discuti-la com o dono do projeto.
 
 **Estado ao final**: nenhum código alterado, nada migrado. Próximo passo: explorar o repo e o
 consumo do Anchor, apresentar o inventário e discutir as opções de migração.
+
+### 2026-10-14 — Sessão 22
+
+**Objetivo**: mapear tudo (Lume + consumo pelo Anchor) para a desmontagem e registrar no `project/`.
+
+**Feito**:
+- Lidos o código do Lume (routers, services, sources, config, sidecar) e, no Anchor, `finance_api/`
+  (client, sidecar, settings), `commands/collector.rs`, docs do `project/` e o mobile; no Warden,
+  as menções ao Lume.
+- Criado `project/DESMONTAGEM.md`: inventário de capacidades/fontes/cache/config, como o Anchor
+  consome hoje (sidecar dev/release, CI por SHA, Settings Local/Remote não ligada, fallback Warden
+  não implementado), lacunas/riscos e 3 opções de migração (A: mover o Python para o repo do Anchor;
+  B: reescrever em Rust; C: híbrido faseado) com prós e contras, mais decisões ortogonais.
+- Achados: só o Anchor depende do Lume em código; 4 domínios sem consumidor (taxas/DI, câmbio,
+  opções, tax-rules); mobile e Warden não usam o Lume; repo já migrou no GitHub para `Arven-Labs/lume`.
+- `INDEX.md` e `ARCHITECTURE.md` apontam para o novo arquivo.
+
+**Estado ao final**: nenhum código alterado no Lume nem no Anchor. Aguardando o dono escolher a
+opção e as decisões ortogonais.

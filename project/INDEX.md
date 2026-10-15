@@ -1,6 +1,6 @@
 # Lume — Estado do Projeto
 
-> Última atualização: 2026-10-14 (Sessão 21 — `SPEC-lume-desmontagem.md` registrada: decisão de desfazer o Lume e tornar o Anchor autossuficiente; plano de migração a discutir)
+> Última atualização: 2026-10-14 (Sessão 22 — inventário da desmontagem do Lume e opções de migração para o Anchor em `DESMONTAGEM.md`)
 
 ---
 
@@ -19,6 +19,7 @@ Leia o arquivo relevante para o que você precisa:
 | Fases detalhadas do MVP | `PHASE.md` |
 | Decisões de arquitetura em aberto | `ARCHITECTURE.md` |
 | Pendências (resolvidas e não resolvidas) | `PENDING.md` |
+| **Desmontagem do Lume: inventário, consumo pelo Anchor, opções A/B/C** | **`DESMONTAGEM.md`** |
 | Roadmap, evoluções planejadas, monetização, backlog | `ROADMAP.md` |
 | Log completo de sessões de trabalho | `SESSIONS.md` |
 
