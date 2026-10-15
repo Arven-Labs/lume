@@ -1,6 +1,6 @@
 # Desmontagem do Lume — Inventário e Opções de Migração
 
-> Criado: 2026-10-14 (Sessão 22). Origem: `SPEC-lume-desmontagem.md` (raiz) + `SPEC-anchor-autossuficiencia.md`
+> Criado: 2026-10-14 (Sessão 22). Origem: `SPEC-lume-desmontagem.md` (removida da raiz na Sessão 24, ver `git show e7af80a:SPEC-lume-desmontagem.md`) + `SPEC-anchor-autossuficiencia.md`
 > (repo do Anchor). **Só mapeamento** — nenhuma decisão de arquitetura foi confirmada com o dono do
 > projeto; itens **[DIREÇÃO]** são hipóteses. Nada foi migrado, arquivado ou apagado.
 > Levantado lendo o código dos dois repos (Lume e Anchor) e as docs do `project/` do Anchor/Warden.

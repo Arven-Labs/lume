@@ -1,6 +1,6 @@
 # Lume — Estado do Projeto
 
-> Última atualização: 2026-10-14 (Sessão 23 — Opção C (híbrido faseado) escolhida para a desmontagem do Lume)
+> Última atualização: 2026-10-14 (Sessão 24 — spec removida da raiz, decisões ortogonais adiadas; Sessão 23 — Opção C (híbrido faseado) escolhida para a desmontagem do Lume)
 
 ---
 

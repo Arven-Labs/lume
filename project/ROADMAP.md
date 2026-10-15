@@ -352,7 +352,7 @@ estáveis, e o Warden já teria uso imediato.
 
 ### Desmontagem do Lume (Sessão 21 — decisão tomada, plano de migração a debater)
 
-> Origem: `SPEC-lume-desmontagem.md` (raiz do repo), escrita a partir de uma conversa de alto nível
+> Origem: `SPEC-lume-desmontagem.md` (removida da raiz na Sessão 24; conteúdo incorporado aqui e em `DESMONTAGEM.md`; recuperável via `git show e7af80a:SPEC-lume-desmontagem.md`), escrita a partir de uma conversa de alto nível
 > — a spec manda **não presumir nada** e confirmar cada decisão de arquitetura com o dono do projeto.
 > Itens **[DIREÇÃO]** são ideias a validar.
 

@@ -873,3 +873,15 @@ de 3 fases) e `ARCHITECTURE.md`.
 
 **Estado ao final**: sem código alterado. Pendentes: decisões ortogonais (armazenamento, exposição ao
 Warden, domínios sem consumidor, `DataProvider`).
+
+### 2026-10-14 — Sessão 24
+
+**Objetivo**: fechar o registro da desmontagem sem avançar no plano (dono do projeto: "não vamos fazer agora").
+
+**Feito**:
+- `SPEC-lume-desmontagem.md` removida da raiz — conteúdo já em `ROADMAP.md` e `DESMONTAGEM.md`;
+  segue recuperável no git (`e7af80a`). Referências a ela atualizadas.
+- Execução **adiada**: nada da Fase 1 começa agora. Decisões ortogonais (banco, exposição ao Warden,
+  domínios sem consumidor, `DataProvider`) continuam em aberto, listadas em `DESMONTAGEM.md`.
+
+**Estado ao final**: nenhum código alterado; aviso no README não adicionado (aguarda confirmação).
