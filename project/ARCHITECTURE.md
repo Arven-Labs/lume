@@ -11,6 +11,7 @@
 | Escopo do Lume (centro de informações vs. plataforma de integrações do blueprint) | Manter visão de 3 camadas do blueprint vs. Lume só dado/informação, integrações burocráticas (NF-e, boleto, custódia B3) num projeto separado | **Em debate (Sessão 18)** — proposta do dono do projeto registrada em `ROADMAP.md`, seção "Reposicionamento do Lume"; afeta Fases 2-4 do `PHASE.md` |
 | Instância local compartilhada entre apps (Anchor, Warden) | Cada app sobe o próprio sidecar (hoje) vs. descoberta de instância já rodando (porta fixa / socket / arquivo de descoberta) com fallback pra cópia embutida | **Em debate (Sessão 18)** — conflita com a porta dinâmica do `sidecar_main.py`; ver `ROADMAP.md` |
 | Fontes plugáveis (`DataProvider` + `ProviderRegistry`) | Fonte fixa por service (hoje) vs. interface por categoria com cascata BYO-key → grátis, premium só no hospedado | **Em debate (Sessão 18)** — esboço em `ROADMAP.md`, não implementado |
+| Régua de escopo (o que entra no Lume) e domínios não financeiros (clima, geo, CVEs…) | Só finanças vs. centro de informações multi-domínio com namespaces (`finance/`, `weather/`, `geo/`, `sec/`) | **Em debate (Sessão 20)** — régua (público, somente leitura, precisa normalização/cache, ≥ 2 consumidores; nada com credencial/estado do usuário) e catálogo de ideias em `ROADMAP.md`, seção "Régua de escopo e ideias de utilidades além de finanças" |
 
 ---
 

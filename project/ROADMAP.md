@@ -253,6 +253,69 @@ A nota usa vocabulário de Rust ("traits"); o Lume é Python — o equivalente s
   decidir com qual provider ingerir — BYO-key do usuário no modo local faz sentido; no hospedado,
   o premium.
 
+### Régua de escopo e ideias de utilidades além de finanças (Brainstorm — sem `/plan`, Sessão 20)
+
+> Origem: `lume-ideias.md` (nota solta do dono do projeto na raiz, incorporada aqui e removida do
+> repo na Sessão 20). Refina o "Reposicionamento do Lume" acima. **Ideias pra debater — nada
+> decidido nem passou por `/plan`.**
+
+**Visão**: Lume = centro de informações consumido por Anchor, Warden e outros apps do
+ecossistema. Hoje é financeiro, mas o escopo não se restringe a isso.
+
+**Régua de escopo** — entra no Lume se o dado é: (1) público, (2) somente leitura, (3) precisa de
+normalização e/ou cache, (4) consumido por mais de um app. **Fica de fora** qualquer coisa com
+credencial, certificado (mTLS), conta ou estado do usuário — isso vai pro projeto de integrações
+burocráticas (NFe, boleto, Open Finance, B3) ou fica dentro do Anchor. Isso responde parte das
+perguntas de fronteira do reposicionamento: **Open Finance (extratos) cai fora do Lume** (exige
+consentimento/conta do usuário) e custódia B3 também; dado de mercado B3 público continua.
+
+**Decisões de arquitetura registradas na nota (contexto)**:
+- Lume continua **separado** do Anchor: o Warden compartilha a mesma instância local (sidecar com
+  fallback), então embutir no Anchor criaria dependência do Warden no Anchor.
+- `DataProvider` com implementações plugáveis (grátis por padrão, BYO-key, premium só no
+  hospedado) e o princípio "pago nunca tranca funcionalidade básica" — já descritos acima.
+
+**Ideias financeiras (novas)**
+
+| Domínio | Exemplos | Quem usa |
+|---|---|---|
+| Macro e calendário | Selic, IPCA, câmbio, curva de juros (BCB), feriados e dias úteis da B3 | Anchor (reajuste de imóvel, desconto de DCF), Warden (lembretes) |
+| Documentos regulatórios | Fatos relevantes, DFP/ITR (CVM), calendário de resultados | Warden (alertas), Anchor (preço-teto) |
+| Commodities e setor | Preço de celulose e minério, clima e safra | Anchor (módulo de commodities: Suzano, Klabin, Vale) |
+| Cadastros públicos | CNPJ, CEP, CNAE | Anchor (custódia por titular, empresa não listada), site do açaí |
+| On-chain | Preço de token, dados da Base, saldo de endereço público | Anchor (classe cripto, sem falar direto com RPC) |
+| Notícias por ativo | Agregação com dedupe | Deixar por último: alto custo de manutenção |
+
+Fontes grátis boas: BCB, CVM, IBGE. Premium hospedado seria para latência e cobertura. (Várias
+linhas já existem parcial ou totalmente no Lume — macro BCB, câmbio, cripto; comparar com
+`OVERVIEW.md` antes de tratar como novidade.)
+
+**Ideias não financeiras**
+
+| Domínio | Exemplos | Quem usa |
+|---|---|---|
+| Clima e astronomia | Previsão (INMET, Open-Meteo), nascer/pôr do sol, fases da lua | Warden (briefing do dia, lembretes) |
+| Geo e cadastros | CEP, municípios e códigos IBGE, feriados por cidade/estado | Site do açaí, cadastro de imóvel do Anchor |
+| Dados abertos do governo | Diário Oficial (Querido Diário), licitações (PNCP), editais | Possível fonte de leads pra freelance |
+| Segurança e releases | CVEs (NVD), advisories do GitHub, versões de Proxmox, Docker e Paper | Homelab, servidor de Minecraft, alertas no Warden |
+| Calendários | Vestibular, ENEM, SISU, prazos de inscrição, eventos esportivos | Warden |
+| Status de serviços | Uptime de APIs de que você depende (BCB, CVM, RPC da Base) | Health check dos próprios providers |
+
+**Organização sugerida**: namespaces por domínio (`finance/`, `weather/`, `geo/`, `sec/`), cada
+um com seus `DataProvider`s e schema, com cache e rate-limit compartilhados. Sem isso o Lume vira
+um agregador genérico sem contrato claro. (Hoje `api/app/` é plano por tipo de arquivo, não por
+domínio — o namespacing seria refactor.)
+
+**Ordem de ataque (palpite)**: 1. Clima, 2. Geo, 3. Releases e CVEs — fontes gratuitas e
+estáveis, e o Warden já teria uso imediato.
+
+**Pontos em aberto**:
+- O nome e o posicionamento ("centro de informações") aguentam a abertura, ou o núcleo é finanças
+  e o resto vira extensão opcional?
+- Quais dessas ideias têm consumidor real além do Anchor? Se só o Anchor usa, pode morar nele
+  (a própria régua exige ≥ 2 consumidores).
+- Notícias: só entra se houver um caso de uso claro que justifique a manutenção.
+
 ### Ideias de Expansão (Brainstorm — sem `/plan`)
 
 - Open Finance de verdade (extratos bancários via Open Finance Brasil) — mencionado no

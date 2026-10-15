@@ -810,3 +810,21 @@ série desde 1999). **Fragilidade pré-existente registrada, não corrigida**: `
 (CDI/IPCA) segue com 15s e sem nova tentativa — um 502 passageiro do BCB derrubou o CDI uma vez
 nesta sessão.
 
+### 2026-10-14 — Sessão 20
+
+**Objetivo**: incorporar à documentação o `lume-ideias.md` (nota solta na raiz, sem commitar) —
+ideias pra debate, não decisões fechadas.
+
+**Feito**:
+- Conteúdo inteiro registrado em `ROADMAP.md`, seção nova "Régua de escopo e ideias de utilidades
+  além de finanças": régua de escopo (público, somente leitura, normalização/cache, ≥ 2
+  consumidores; fora o que tem credencial/estado), decisão de manter Lume separado do Anchor
+  (Warden compartilha a instância), tabelas de ideias financeiras e não financeiras, namespaces
+  por domínio, ordem de ataque (clima → geo → CVEs) e pontos em aberto.
+- Anotado que a régua responde parte das fronteiras do reposicionamento (Open Finance e custódia
+  B3 ficam fora; dado público de mercado fica) e que parte das ideias financeiras já existe.
+- 1 linha nova "Em debate" na tabela de decisões do `ARCHITECTURE.md`; data do `INDEX.md`.
+- `lume-ideias.md` removido da raiz depois de incorporado.
+
+**Estado ao final**: nenhum código alterado. Próximo passo: debater os pontos em aberto antes de
+qualquer `/plan`.

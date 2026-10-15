@@ -1,6 +1,6 @@
 # Lume — Estado do Projeto
 
-> Última atualização: 2026-09-23 (Sessão 18 — notas de reposicionamento do Lume incorporadas ao `ROADMAP.md` como brainstorm: escopo, local vs. hospedado, `DataProvider` plugável)
+> Última atualização: 2026-10-14 (Sessão 20 — `lume-ideias.md` incorporado ao `ROADMAP.md` como brainstorm: régua de escopo, ideias de utilidades financeiras e não financeiras, namespaces por domínio)
 
 ---
 
