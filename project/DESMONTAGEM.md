@@ -116,7 +116,7 @@ Anchor = Tauri 2 (Rust, SeaORM, **SQLite**) + React (`desktop/`) + Flutter (`mob
 
 ---
 
-## 4. Opções de migração (para discutir — nenhuma escolhida)
+## 4. Opções de migração — **escolhida: C (Sessão 23)**
 
 ### Opção A — Mover o `api/` Python para dentro do repo do Anchor (monorepo, sem reescrever)
 Estrutura **[DIREÇÃO]**: `anchor/{core-data (Python), desktop, mobile}`; o sidecar continua igual, mas o
@@ -162,6 +162,23 @@ domínio, na ordem de uso pelo Anchor, aposentando o sidecar aos poucos.
 | Outro dependente além do Anchor | Verificado: nenhum em código (seção 2.1) |
 | README com aviso de desmontagem | **Não feito — aguardando confirmação** |
 | Arquivar/apagar o repo | Decisão exclusiva do dono, depois de validar o Anchor sozinho |
+
+## 5.1 Decisão (Sessão 23)
+
+**Opção C — híbrido faseado**, confirmada pelo dono do projeto. As decisões ortogonais da seção 4
+seguem **em aberto** e precisam ser fechadas antes do detalhamento.
+
+Esboço do plano **[DIREÇÃO]**, a validar:
+- **Fase 1 — consolidar repos (Opção A)**: levar `api/` (+ migrations, testes, `sidecar_main.py`) para o
+  repo do Anchor; CI passa a buildar o sidecar do próprio repo (some `.easybusiness-version`); dev
+  sobe o serviço do próprio repo; paridade verificada rodando os 41 testes e o Anchor ponta a ponta.
+  Só então o Lume pode ser marcado como desmontado (README com aviso, **se confirmado**).
+- **Fase 2 — reescrever em Rust por domínio**, na ordem de uso pelo Anchor (macro/BCB → ações BR →
+  CVM/FII → EUA/SEC → cripto/metais/índices), cada domínio com teste de paridade contra o sidecar
+  Python antes de aposentá-lo; domínios sem consumidor (taxas/DI, câmbio, opções, tax-rules) por
+  último ou descartados.
+- **Fase 3 — aposentar o sidecar** quando o último domínio migrar; remover Settings Local/Remote e
+  detecção de instância compartilhada se perderem o sentido.
 
 ## 6. Próximos passos sugeridos
 1. Dono escolhe A / B / C (ou outra) e responde as decisões ortogonais.

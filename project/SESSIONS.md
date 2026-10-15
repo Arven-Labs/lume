@@ -862,3 +862,14 @@ consumo do Anchor, apresentar o inventário e discutir as opções de migração
 
 **Estado ao final**: nenhum código alterado no Lume nem no Anchor. Aguardando o dono escolher a
 opção e as decisões ortogonais.
+
+### 2026-10-14 — Sessão 23
+
+**Objetivo**: registrar a escolha da opção de migração.
+
+**Feito**: dono do projeto escolheu a **Opção C** (híbrido faseado: mover o Python para o repo do
+Anchor, depois reescrever em Rust por domínio). Registrado em `DESMONTAGEM.md` (seção 5.1, com esboço
+de 3 fases) e `ARCHITECTURE.md`.
+
+**Estado ao final**: sem código alterado. Pendentes: decisões ortogonais (armazenamento, exposição ao
+Warden, domínios sem consumidor, `DataProvider`).

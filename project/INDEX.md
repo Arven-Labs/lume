@@ -1,6 +1,6 @@
 # Lume — Estado do Projeto
 
-> Última atualização: 2026-10-14 (Sessão 22 — inventário da desmontagem do Lume e opções de migração para o Anchor em `DESMONTAGEM.md`)
+> Última atualização: 2026-10-14 (Sessão 23 — Opção C (híbrido faseado) escolhida para a desmontagem do Lume)
 
 ---
 
