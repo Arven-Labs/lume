@@ -892,9 +892,9 @@ Warden, domínios sem consumidor, `DataProvider`).
 
 **Decisões do dono**: ruleset `protect-main` igual em todos (PR com 0 aprovações, check `guard` obrigatório, sem force push, sem apagar a `main`, admin só via PR); `guard` genérico; template de PR do warden; secret scanning, push protection e alertas do Dependabot ligados; logs de sessão não são reordenados; CI de testes por stack fica para outra rodada.
 
-**Feito** (este PR, `chore/padrao-fluxo`):
+**Feito** (PR #1, `chore/padrao-fluxo`):
 - `.github/pull_request_template.md` e `.github/workflows/ci-private-files.yml` (job `guard`: barra segredo, chave e credencial rastreados). Nenhum código tocado.
 
 **Fica**: depois do merge e do `guard` verde na `main`, ligar o ruleset, os recursos de segurança e o `delete_branch_on_merge` (mudança de CI/permissões: uma confirmação do dono por repositório, §4). Ligar o ruleset antes deixaria todo PR esperando um check que nunca reporta. O lume só tem workflow de deploy no `push`; CI de testes em PR é outra rodada.
 
-**Não verificado**: o `guard` ainda não rodou no GitHub (o PR não foi aberto). Foi testado só localmente, com fixtures (`padrao/test-guard.sh` no workspace) e contra os arquivos já rastreados do repo, sem nenhum acerto.
+**Não verificado**: CI do PR #1 (visto com `gh pr view`): `guard` verde; o `deploy-docs.yml` só roda em `push` na `main`, então não disparou no PR. Estado `CLEAN`. Antes do PR, o `guard` também foi testado localmente (`padrao/test-guard.sh` no workspace, com fixtures) e contra os arquivos já rastreados do repo, sem nenhum acerto. **Ainda não verificado**: o ruleset e os recursos de segurança do GitHub, que só são ligados depois do merge.
